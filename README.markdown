@@ -208,7 +208,8 @@ Methods whose implementation simply calls the superclass should also be removed.
 
 **Preferred:**
 ```swift
-override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+{
   return Database.contacts.count
 }
 ```
