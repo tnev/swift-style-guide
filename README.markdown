@@ -241,7 +241,7 @@ Keep imports minimal. For example, don't import `UIKit` when importing `Foundati
 
 ## Spacing
 
-* Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open and close on a new line.
+* Method braces and control flow braces (`if`/`else`/`switch`/`while` etc.) always open and close on a new line. Closure braces should open on the same line and close on a new line.
 * Tip: You can re-indent by selecting some code (or ⌘A to select all) and then Control-I (or Editor\Structure\Re-Indent in the menu).
 
 **Preferred:**
@@ -254,6 +254,10 @@ else
 {
   // Do something else
 }
+
+UIView.animate(withDuration: 1.0) {
+  self.myView.alpha = 0
+}
 ```
 
 **Not Preferred:**
@@ -262,6 +266,11 @@ if user.isHappy {
   // Do something
 } else {
   // Do something else
+}
+
+UIView.animate(withDuration: 1.0)
+{
+  self.myView.alpha = 0
 }
 ```
 
