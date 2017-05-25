@@ -271,14 +271,16 @@ if user.isHappy {
 
 **Preferred:**
 ```swift
-class TestDatabase: Database {
+class TestDatabase: Database
+{
   var data: [String: CGFloat] = ["A": 1.2, "B": 3.2]
 }
 ```
 
 **Not Preferred:**
 ```swift
-class TestDatabase : Database {
+class TestDatabase : Database
+{
   var data :[String:CGFloat] = ["A" : 1.2, "B":3.2]
 }
 ```
