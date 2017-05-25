@@ -1,7 +1,5 @@
-# The Official raywenderlich.com Swift Style Guide.
+# Dynamic Signal Swift Style Guide
 ### Updated for Swift 3
-
-This style guide is different from others you may see, because the focus is centered on readability for print and the web. We created this style guide to keep the code in our books, tutorials, and starter kits nice and consistent — even though we have many different authors working on the books.
 
 Our overarching goals are clarity, consistency and brevity, in that order.
 
@@ -84,24 +82,9 @@ Descriptive and consistent naming makes software easier to read and understand. 
 - labeling closure and tuple parameters
 - taking advantage of default parameters
 
-### Prose
-
-When referring to methods in prose, being unambiguous is critical. To refer to a method name, use the simplest form possible.
-
-1. Write the method name with no parameters.  **Example:** Next, you need to call the method `addTarget`.
-2. Write the method name with argument labels.  **Example:** Next, you need to call the method `addTarget(_:action:)`.
-3. Write the full method name with argument labels and types. **Example:** Next, you need to call the method `addTarget(_: Any?, action: Selector?)`.
-
-For the above example using `UIGestureRecognizer`, 1 is unambiguous and preferred.
-
-**Pro Tip:** You can use Xcode's jump bar to lookup methods with argument labels.
-
-![Methods in Xcode jump bar](screens/xcode-jump-bar.png)
-
-
 ### Class Prefixes
 
-Swift types are automatically namespaced by the module that contains them and you should not add a class prefix such as RW. If two names from different modules collide you can disambiguate by prefixing the type name with the module name. However, only specify the module name when there is possibility for confusion which should be rare.
+Swift types are automatically namespaced by the module that contains them and you should not add a class prefix such as VS. If two names from different modules collide you can disambiguate by prefixing the type name with the module name. However, only specify the module name when there is possibility for confusion which should be rare.
 
 ```swift
 import SomeModule
@@ -215,9 +198,9 @@ For UIKit view controllers, consider grouping lifecycle, custom accessors, and I
 
 ### Unused Code
 
-Unused (dead) code, including Xcode template code and placeholder comments should be removed. An exception is when your tutorial or book instructs the user to use the commented code.
+Unused (dead) code, including Xcode template code and placeholder comments should be removed.
 
-Aspirational methods not directly associated with the tutorial whose implementation simply calls the superclass should also be removed. This includes any empty/unused UIApplicationDelegate methods.
+Methods whose implementation simply calls the superclass should also be removed. This includes any empty/unused UIApplicationDelegate methods.
 
 **Preferred:**
 ```swift
@@ -250,29 +233,26 @@ Keep imports minimal. For example, don't import `UIKit` when importing `Foundati
 
 ## Spacing
 
-* Indent using 2 spaces rather than tabs to conserve space and help prevent line wrapping. Be sure to set this preference in Xcode and in the Project settings as shown below:
-
-![Xcode indent settings](screens/indentation.png)
-
-* Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
-* Tip: You can re-indent by selecting some code (or ⌘A to select all) and then Control-I (or Editor\Structure\Re-Indent in the menu). Some of the Xcode template code will have 4-space tabs hard coded, so this is a good way to fix that.
+* Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open and close on a new line.
+* Tip: You can re-indent by selecting some code (or ⌘A to select all) and then Control-I (or Editor\Structure\Re-Indent in the menu).
 
 **Preferred:**
 ```swift
-if user.isHappy {
+if user.isHappy
+{
   // Do something
-} else {
+}
+else
+{
   // Do something else
 }
 ```
 
 **Not Preferred:**
 ```swift
-if user.isHappy
-{
+if user.isHappy {
   // Do something
-}
-else {
+} else {
   // Do something else
 }
 ```
@@ -294,8 +274,6 @@ class TestDatabase : Database {
   var data :[String:CGFloat] = ["A" : 1.2, "B":3.2]
 }
 ```
-
-* Long lines should be wrapped at around 70 characters. A hard limit is intentionally not specified.
 
 * Avoid trailing whitespaces at the ends of lines.
 
@@ -323,38 +301,48 @@ Sometimes, things should be structs but need to conform to `AnyObject` or are hi
 Here's an example of a well-styled class definition:
 
 ```swift
-class Circle: Shape {
+class Circle: Shape
+{
   var x: Int, y: Int
   var radius: Double
-  var diameter: Double {
-    get {
+  var diameter: Double
+  {
+    get
+    {
       return radius * 2
     }
-    set {
+    set
+    {
       radius = newValue / 2
     }
   }
 
-  init(x: Int, y: Int, radius: Double) {
+  init(x: Int, y: Int, radius: Double)
+  {
     self.x = x
     self.y = y
     self.radius = radius
   }
 
-  convenience init(x: Int, y: Int, diameter: Double) {
+  convenience init(x: Int, y: Int, diameter: Double)
+  {
     self.init(x: x, y: y, radius: diameter / 2)
   }
 
-  override func area() -> Double {
+  override func area() -> Double
+  {
     return Double.pi * radius * radius
   }
 }
 
-extension Circle: CustomStringConvertible {
-  var description: String {
+extension Circle: CustomStringConvertible
+{
+  var description: String
+  {
     return "center = \(centerString) area = \(area())"
   }
-  private var centerString: String {
+  private var centerString: String
+  {
     return "(\(x),\(y))"
   }
 }
@@ -382,15 +370,18 @@ For conciseness, if a computed property is read-only, omit the get clause. The g
 
 **Preferred:**
 ```swift
-var diameter: Double {
+var diameter: Double
+{
   return radius * 2
 }
 ```
 
 **Not Preferred:**
 ```swift
-var diameter: Double {
-  get {
+var diameter: Double
+{
+  get
+  {
     return radius * 2
   }
 }
@@ -398,34 +389,17 @@ var diameter: Double {
 
 ### Final
 
-Marking classes or members as `final` in tutorials can distract from the main topic and is not required. Nevertheless, use of `final` can sometimes clarify your intent and is worth the cost. In the below example, `Box` has a particular purpose and customization in a derived class is not intended. Marking it `final` makes that clear.
+Use `final` when a property or method should not be overriden, or when a class should not be subclassed.
 
 ```swift
 // Turn any generic type into a reference type using this Box class.
-final class Box<T> {
+final class Box<T>
+{
   let value: T
-  init(_ value: T) {
+  init(_ value: T)
+  {
     self.value = value
   }
-}
-```
-
-## Function Declarations
-
-Keep short function declarations on one line including the opening brace:
-
-```swift
-func reticulateSplines(spline: [Double]) -> Bool {
-  // reticulate code goes here
-}
-```
-
-For functions with long signatures, add line breaks at appropriate points and add an extra indent on subsequent lines:
-
-```swift
-func reticulateSplines(spline: [Double], adjustmentFactor: Double,
-    translateConstant: Int, comment: String) -> Bool {
-  // reticulate code goes here
 }
 ```
 
@@ -494,8 +468,6 @@ let width: NSNumber = 120.0                          // NSNumber
 let widthString: NSString = width.stringValue        // NSString
 ```
 
-In Sprite Kit code, use `CGFloat` if it makes the code more succinct by avoiding too many conversions.
-
 ### Constants
 
 Constants are defined using the `let` keyword, and variables with the `var` keyword. Always use `let` instead of `var` if the value of the variable will not change.
@@ -506,7 +478,8 @@ You can define constants on a type rather than on an instance of that type using
 
 **Preferred:**
 ```swift
-enum Math {
+enum Math
+{
   static let e = 2.718281828459045235360287
   static let root2 = 1.41421356237309504880168872
 }
@@ -543,7 +516,8 @@ self.textContainer?.textLabel?.setNeedsDisplay()
 Use optional binding when it's more convenient to unwrap once and perform multiple operations:
 
 ```swift
-if let textContainer = self.textContainer {
+if let textContainer = self.textContainer
+{
   // do many things with textContainer
 }
 ```
@@ -558,7 +532,8 @@ var subview: UIView?
 var volume: Double?
 
 // later on...
-if let subview = subview, let volume = volume {
+if let subview = subview, let volume = volume
+{
   // do something with unwrapped subview and volume
 }
 ```
@@ -568,8 +543,10 @@ if let subview = subview, let volume = volume {
 var optionalSubview: UIView?
 var volume: Double?
 
-if let unwrappedSubview = optionalSubview {
-  if let realVolume = volume {
+if let unwrappedSubview = optionalSubview
+{
+  if let realVolume = volume
+  {
     // do something with unwrappedSubview and realVolume
   }
 }
@@ -582,7 +559,8 @@ Consider using lazy initialization for finer grain control over object lifetime.
 ```swift
 lazy var locationManager: CLLocationManager = self.makeLocationManager()
 
-private func makeLocationManager() -> CLLocationManager {
+private func makeLocationManager() -> CLLocationManager
+{
   let manager = CLLocationManager()
   manager.desiredAccuracy = kCLLocationAccuracyBest
   manager.delegate = self
@@ -590,11 +568,6 @@ private func makeLocationManager() -> CLLocationManager {
   return manager
 }
 ```
-
-**Notes:**
-  - `[unowned self]` is not required here. A retain cycle is not created.
-  - Location manager has a side-effect for popping up UI to ask the user for permission so fine grain control makes sense here.
-
 
 ### Type Inference
 
@@ -678,7 +651,7 @@ let value = max(x, y, z)  // another free function that feels natural
 
 ## Memory Management
 
-Code (even non-production, tutorial demo code) should not create reference cycles. Analyze your object graph and prevent strong cycles with `weak` and `unowned` references. Alternatively, use value types (`struct`, `enum`) to prevent cycles altogether.
+Code should not create reference cycles. Analyze your object graph and prevent strong cycles with `weak` and `unowned` references. Alternatively, use value types (`struct`, `enum`) to prevent cycles altogether.
 
 ### Extending object lifetime
 
@@ -687,7 +660,8 @@ Extend object lifetime using the `[weak self]` and `guard let strongSelf = self 
 **Preferred**
 ```swift
 resource.request().onComplete { [weak self] response in
-  guard let strongSelf = self else {
+  guard let strongSelf = self else
+  {
     return
   }
   let model = strongSelf.updateModel(response)
@@ -715,7 +689,7 @@ resource.request().onComplete { [weak self] response in
 
 ## Access Control
 
-Full access control annotation in tutorials can distract from the main topic and is not required. Using `private` and `fileprivate` appropriately, however, adds clarity and promotes encapsulation. Prefer `private` to `fileprivate` when possible. Using extensions may require you to use `fileprivate`.
+Using `private` and `fileprivate` appropriately adds clarity and promotes encapsulation. Prefer `private` to `fileprivate` when possible. Using extensions may require you to use `fileprivate`.
 
 Only explicitly use `open`, `public`, and `internal` when you require a full access control specification.
 
@@ -725,7 +699,8 @@ Use access control as the leading property specifier. The only things that shoul
 ```swift
 private let message = "Great Scott!"
 
-class TimeMachine {  
+class TimeMachine
+{  
   fileprivate dynamic lazy var fluxCapacitor = FluxCapacitor()
 }
 ```
@@ -734,7 +709,8 @@ class TimeMachine {
 ```swift
 fileprivate let message = "Great Scott!"
 
-class TimeMachine {  
+class TimeMachine
+{  
   lazy dynamic fileprivate var fluxCapacitor = FluxCapacitor()
 }
 ```
@@ -745,19 +721,23 @@ Prefer the `for-in` style of `for` loop over the `while-condition-increment` sty
 
 **Preferred:**
 ```swift
-for _ in 0..<3 {
+for _ in 0..<3
+{
   print("Hello three times")
 }
 
-for (index, person) in attendeeList.enumerated() {
+for (index, person) in attendeeList.enumerated()
+{
   print("\(person) is at position #\(index)")
 }
 
-for index in stride(from: 0, to: items.count, by: 2) {
+for index in stride(from: 0, to: items.count, by: 2)
+{
   print(index)
 }
 
-for index in (0...3).reversed() {
+for index in (0...3).reversed()
+{
   print(index)
 }
 ```
@@ -765,14 +745,16 @@ for index in (0...3).reversed() {
 **Not Preferred:**
 ```swift
 var i = 0
-while i < 3 {
+while i < 3
+{
   print("Hello three times")
   i += 1
 }
 
 
 var i = 0
-while i < attendeeList.count {
+while i < attendeeList.count
+{
   let person = attendeeList[i]
   print("\(person) is at position #\(i)")
   i += 1
@@ -785,12 +767,15 @@ When coding with conditionals, the left-hand margin of the code should be the "g
 
 **Preferred:**
 ```swift
-func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
+func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies
+{
 
-  guard let context = context else {
+  guard let context = context else
+  {
     throw FFTError.noContext
   }
-  guard let inputData = inputData else {
+  guard let inputData = inputData else
+  {
     throw FFTError.noInputData
   }
 
@@ -801,17 +786,24 @@ func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies 
 
 **Not Preferred:**
 ```swift
-func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
+func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies
+{
 
-  if let context = context {
-    if let inputData = inputData {
+  if let context = context
+  {
+    if let inputData = inputData
+    {
       // use context and input to compute the frequencies
 
       return frequencies
-    } else {
+    }
+    else
+    {
       throw FFTError.noInputData
     }
-  } else {
+  }
+  else
+  {
     throw FFTError.noContext
   }
 }
@@ -823,7 +815,8 @@ When multiple optionals are unwrapped either with `guard` or `if let`, minimize 
 ```swift
 guard let number1 = number1,
       let number2 = number2,
-      let number3 = number3 else {
+      let number3 = number3 else
+{
   fatalError("impossible")
 }
 // do something with numbers
@@ -831,17 +824,26 @@ guard let number1 = number1,
 
 **Not Preferred:**
 ```swift
-if let number1 = number1 {
-  if let number2 = number2 {
-    if let number3 = number3 {
+if let number1 = number1
+{
+  if let number2 = number2
+  {
+    if let number3 = number3
+    {
       // do something with numbers
-    } else {
+    }
+    else
+    {
       fatalError("impossible")
     }
-  } else {
+  }
+  else
+  {
     fatalError("impossible")
   }
-} else {
+}
+else
+{
   fatalError("impossible")
 }
 ```
@@ -866,22 +868,22 @@ let swift = "not a scripting language"
 let swift = "not a scripting language";
 ```
 
-**NOTE**: Swift is very different from JavaScript, where omitting semicolons is [generally considered unsafe](http://stackoverflow.com/questions/444080/do-you-recommend-using-semicolons-after-every-statement-in-javascript)
-
 ## Parentheses
 
 Parentheses around conditionals are not required and should be omitted.
 
 **Preferred:**
 ```swift
-if name == "Hello" {
+if name == "Hello"
+{
   print("World")
 }
 ```
 
 **Not Preferred:**
 ```swift
-if (name == "Hello") {
+if (name == "Hello")
+{
   print("World")
 }
 ```
@@ -892,12 +894,6 @@ In larger expressions, optional parentheses can sometimes make code read more cl
 ```swift
 let playerMark = (player == current ? "X" : "O")
 ```
-
-## Organization and Bundle Identifier
-
-Where an Xcode project is involved, the organization should be set to `Ray Wenderlich` and the Bundle Identifier set to `com.razeware.TutorialName` where `TutorialName` is the name of the tutorial project.
-
-![Xcode Project settings](screens/project_settings.png)
 
 ## Copyright Statement
 
@@ -935,20 +931,6 @@ file:
 * THE SOFTWARE.
 */
 ```
-
-## Smiley Face
-
-Smiley faces are a very prominent style feature of the [raywenderlich.com](https://www.raywenderlich.com/) site! It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic. The closing square bracket `]` is used because it represents the largest smile able to be captured using ASCII art. A closing parenthesis `)` creates a half-hearted smile, and thus is not preferred.
-
-**Preferred:**
-```
-:]
-```
-
-**Not Preferred:**
-```
-:)
-```  
 
 ## References
 
