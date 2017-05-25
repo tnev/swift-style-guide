@@ -170,24 +170,28 @@ In particular, when adding protocol conformance to a model, prefer adding a sepa
 
 **Preferred:**
 ```swift
-class MyViewController: UIViewController {
+class MyViewController: UIViewController
+{
   // class stuff here
 }
 
 // MARK: - UITableViewDataSource
-extension MyViewController: UITableViewDataSource {
+extension MyViewController: UITableViewDataSource
+{
   // table view data source methods
 }
 
 // MARK: - UIScrollViewDelegate
-extension MyViewController: UIScrollViewDelegate {
+extension MyViewController: UIScrollViewDelegate
+{
   // scroll view delegate methods
 }
 ```
 
 **Not Preferred:**
 ```swift
-class MyViewController: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
+class MyViewController: UIViewController, UITableViewDataSource, UIScrollViewDelegate
+{
   // all methods
 }
 ```
@@ -211,17 +215,20 @@ override func tableView(_ tableView: UITableView, numberOfRowsInSection section:
 
 **Not Preferred:**
 ```swift
-override func didReceiveMemoryWarning() {
+override func didReceiveMemoryWarning()
+{
   super.didReceiveMemoryWarning()
   // Dispose of any resources that can be recreated.
 }
 
-override func numberOfSections(in tableView: UITableView) -> Int {
+override func numberOfSections(in tableView: UITableView) -> Int
+{
   // #warning Incomplete implementation, return the number of sections
   return 1
 }
 
-override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+{
   // #warning Incomplete implementation, return the number of rows
   return Database.contacts.count
 }
